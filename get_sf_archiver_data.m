@@ -27,6 +27,7 @@ function [ data ] = get_sf_archiver_data( PV, from, to, mean_opt)
 %             'P1D'    bin size for average choosen 1 day
 %             'P1W'    bin size for average choosen 1 week
 %             'P1M'    bin size for average choosen 1 month
+%             'raw'    special: no  reduction wanted, same as leave mean_opt argument away
 %
 %   return vales:
 %   data(i).
@@ -64,7 +65,11 @@ else
     if isfloat(mean_opt)
         aggregation_options= [',"aggregation":{"nrOfBins":',num2str(mean_opt),',"aggregationType":"value","aggregations":["mean"]}'];
     else
-        aggregation_options= [',"aggregation":{"durationPerBin":"',mean_opt,'","aggregationType":"value","aggregations":["mean"]}'];
+        if strcmp(mean_opt,'raw') % special case raw received, then no aggregation is wanted
+            aggregation_options = '';
+        else
+            aggregation_options= [',"aggregation":{"durationPerBin":"',mean_opt,'","aggregationType":"value","aggregations":["mean"]}'];
+        end
     end
     %aggregation_options = '';
 end
@@ -108,7 +113,7 @@ for i=1:pvnr(2)
     else
 
         
-        if nargin==3
+        if strcmp(aggregation_options,'')   % check if raw data wanted
             % without mean aggregation
             data(i).val     = [response(i).data.value].';
         else
