@@ -21,11 +21,20 @@ disp(channels)
 % channels = list of structs with the attributes backend and channels
 channels(1).backend
 
-for channelList = channels           
-    fprintf("%s\n", channelList.backend);
+% List all backend
+for i = 1:numel(channels)         
+    fprintf("%s   \n", channels(i).backend);
     % This holds all channels for this backend
-    % channelList.channels
-end                      
+    % channels(i).channels
+end
+
+% List channels of a specific backend
+for i = 1:numel(channels)            
+    if (strcmp(channels(i).backend, 'sf-archiverappliance'))
+        disp(channels(i).channels);                
+    end
+end
+
 
 ```
 
