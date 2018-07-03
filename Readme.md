@@ -6,7 +6,7 @@ As Matlab provides ready to use tooling to access REST APIs the access to the da
 
 Following example shows how to retrieve data from the Epics Channel Archiver:
 
-* Get all available channels
+__Get all available channels__
 ```matlab
 base_url = 'http://data-api.psi.ch/sf';
 
@@ -29,7 +29,7 @@ end
 
 ```
 
-* Retrieve data
+__Retrieve data__
 
 ```matlab
 url = strcat(base_url, '/query');
