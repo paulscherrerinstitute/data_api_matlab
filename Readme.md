@@ -53,3 +53,9 @@ plot([response.data.value])
 ```
 
 The file [get_sf_archiver_data.m](get_sf_archiver_data.m) provides some more examples on how to use the API.
+
+# Additional Notes
+
+While retrieving a lot of data, in the past, we experienced some performance penalty while using Matlab (mostly due to the deserialization). Because of this we highly encourage you to use Python to retrieve and analyze data instead of Matlab in such cases (actually in general we encourage the use of the Python library over Matlab).
+
+The documentation of the Python library you can find here: https://github.com/paulscherrerinstitute/data_api_python
