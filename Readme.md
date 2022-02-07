@@ -54,6 +54,33 @@ plot([response.data.value])
 
 The file [get_sf_archiver_data.m](get_sf_archiver_data.m) provides some more examples on how to use the API.
 
+
+__Another Example__
+
+This is an other easy way to retrieve data via Matlab:
+```
+base_url = 'https://data-api.psi.ch/sf-databuffer';
+url = strcat(base_url, '/channels');
+data = struct('regex','.*');
+options = weboptions('MediaType','application/json');
+options.Timeout = 560; % Man kann das variieren
+channels = webwrite(url, data, options);
+url = strcat(base_url, '/query');
+
+% Beispiel PVs
+ch_list = [
+   '"SARCL01-DBAM110:EOM1_T1",',...
+   '"SARUN20-DBAM020:EOM1_T1"'
+   ];
+
+% Beispiel Zeitbereich
+archiver_range = '"startDate":"2022-02-03T13:00:00.000+01:00",  "endDate":"2022-02-03T13:01:00.000+01:00"}';
+
+data = ['{"channels": [' ch_list '], "range":{' archiver_range ', "eventFields": ["pulseId", "globalSeconds","value"]}'];
+
+response = webwrite(url, data, options);
+```
+
 # Additional Notes
 
 While retrieving a lot of data, in the past, we experienced some performance penalty while using Matlab (mostly due to the deserialization). Because of this we highly encourage you to use Python to retrieve and analyze data instead of Matlab in such cases (actually in general we encourage the use of the Python library over Matlab).
